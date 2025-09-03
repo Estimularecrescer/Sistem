@@ -11,7 +11,6 @@ from PySide6.QtCore import QSize
 import pacientes_logic
 from pacientes_gui import JanelaCadastroPaciente
 
-# --- 1. Definimos nosso "CSS" como uma string ---
 def carregar_estilo():
     with open("style.qss", "r") as f:
         return f.read()
@@ -36,7 +35,6 @@ class JanelaPrincipal(QMainWindow):
 
     def criar_sidebar(self):
         self.sidebar_widget = QWidget()
-        # --- 2. Damos um "ID" para a sidebar para o QSS encontrá-la ---
         self.sidebar_widget.setObjectName("Sidebar")
         
         self.sidebar_layout = QVBoxLayout(self.sidebar_widget)
@@ -45,8 +43,8 @@ class JanelaPrincipal(QMainWindow):
         self.btn_nav_pacientes = QPushButton("Pacientes")
         self.btn_nav_pacientes.setIcon(QIcon("icon_pacientes.png"))
         self.btn_nav_pacientes.setIconSize(QSize(32, 32))
-        self.btn_nav_pacientes.setCheckable(True) # Permite que o botão fique "pressionado"
-        self.btn_nav_pacientes.setChecked(True) # Começa selecionado
+        self.btn_nav_pacientes.setCheckable(True) 
+        self.btn_nav_pacientes.setChecked(True) 
 
         self.btn_nav_agenda = QPushButton("Agenda")
         self.btn_nav_agenda.setCheckable(True)
@@ -63,7 +61,6 @@ class JanelaPrincipal(QMainWindow):
         self.main_area_layout = QVBoxLayout(self.main_area_widget)
 
         self.logo_label = QLabel()
-        # --- 2. Damos um "ID" para a logo ---
         self.logo_label.setObjectName("LogoLabel")
         pixmap = QPixmap('logo.png')
         self.logo_label.setPixmap(pixmap.scaledToWidth(300))
@@ -72,7 +69,6 @@ class JanelaPrincipal(QMainWindow):
         self.main_stack = QStackedWidget()
         self.main_area_layout.addWidget(self.main_stack)
         
-        # ... O resto do código (criação da tela de pacientes, etc.) continua exatamente igual ...
         self.tela_pacientes = QWidget()
         self.tela_pacientes_layout = QVBoxLayout(self.tela_pacientes)
         self.tabela_pacientes = QTableWidget()

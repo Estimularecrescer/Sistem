@@ -1,4 +1,3 @@
-# Em pacientes_gui.py
 import sys
 from PySide6.QtWidgets import (
     QDialog, QLabel, QLineEdit, QPushButton, 
@@ -14,7 +13,6 @@ class JanelaCadastroPaciente(QDialog):
 
         form_layout = QFormLayout()
 
-        # --- Campos de input (iguais a antes) ---
         self.nome_input = QLineEdit()
         self.telefone_input = QLineEdit()
         self.cpf_input = QLineEdit()
@@ -23,14 +21,12 @@ class JanelaCadastroPaciente(QDialog):
         self.nascimento_input = QLineEdit()
         self.convenio_input = QLineEdit()
         
-        # --- Campos de endereço que serão preenchidos ---
         self.cep_input = QLineEdit()
         self.endereco_input = QLineEdit()
         self.bairro_input = QLineEdit()
         self.cidade_input = QLineEdit()
         self.estado_input = QLineEdit()
 
-        # --- Adicionando widgets na ordem correta ---
         form_layout.addRow(QLabel("Nome Completo:"), self.nome_input)
         form_layout.addRow(QLabel("Telefone:"), self.telefone_input)
         form_layout.addRow(QLabel("CPF:"), self.cpf_input)
@@ -53,12 +49,9 @@ class JanelaCadastroPaciente(QDialog):
         
         self.setLayout(main_layout)
         
-        # --- CONEXÕES DOS BOTÕES E CAMPOS ---
         self.salvar_button.clicked.connect(self.salvar_paciente)
-        # MÁGICA AQUI: Conecta o sinal 'editingFinished' do campo CEP a uma nova função
         self.cep_input.editingFinished.connect(self.preencher_endereco_por_cep)
 
-    # --- NOVA FUNÇÃO PARA PREENCHER O ENDEREÇO ---
     def preencher_endereco_por_cep(self):
         """É chamada quando o usuário termina de digitar o CEP."""
         cep = self.cep_input.text()
@@ -68,7 +61,6 @@ class JanelaCadastroPaciente(QDialog):
         dados_endereco = pacientes_logic.consultar_cep(cep)
         
         if dados_endereco:
-            # Preenche os campos da interface com os dados da API
             self.endereco_input.setText(dados_endereco.get('logradouro', ''))
             self.bairro_input.setText(dados_endereco.get('bairro', ''))
             self.cidade_input.setText(dados_endereco.get('localidade', ''))
@@ -77,7 +69,6 @@ class JanelaCadastroPaciente(QDialog):
             QMessageBox.warning(self, "CEP não encontrado", "O CEP digitado não foi encontrado. Por favor, verifique ou preencha o endereço manualmente.")
 
     def salvar_paciente(self):
-        # Constrói o campo de endereço completo para salvar na planilha
         endereco_completo = (
             f"{self.endereco_input.text()}, "
             f"{self.bairro_input.text()}, "
